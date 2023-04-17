@@ -23,8 +23,8 @@ const LoginScreen = () => {
         
         dispatch({type: 'SET_LOGIN'});
 
+        navigation.navigate('Main Tab Menu');
         navigation.navigate('In Theaters');
-
         setEmail("");
         setPassword("");
       } else {

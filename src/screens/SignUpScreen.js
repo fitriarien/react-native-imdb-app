@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, TextInput, TouchableOpacity, ImageBackground, FormData} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Text, TextInput, TouchableOpacity, ImageBackground} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import serverApi from '../util/server-api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SelectList} from 'react-native-dropdown-select-list';
 
 const SignUpScreen = ({navigation}) => {
@@ -15,9 +14,10 @@ const SignUpScreen = ({navigation}) => {
     birthDate: "",
   });
   const [gender, setGender] = useState([
-    {key:1, value: "Male"},
-    {key:2, value: "Female"},
+    {key:"Male", value: "Male"},
+    {key:"Female", value: "Female"},
   ]);
+  const [date, setDate] = useState('09-10-2021');
 
   const signUp = async () => {
     // console.log(dataRegist);
@@ -63,7 +63,7 @@ const SignUpScreen = ({navigation}) => {
       <ImageBackground style={styles.background} source={require('../assets/login-bg.jpg')}>
         <View style={styles.header}>
           <View style={styles.welcomeArea}>
-            <Text style={styles.welcomeText}>Fill up this form to register!</Text>
+            <Text style={styles.welcomeText}>Fill in this form to register!</Text>
             <View style={styles.loginNav}>
               <Text style={styles.loginNavText}>
                 Already have an account?
@@ -78,29 +78,33 @@ const SignUpScreen = ({navigation}) => {
         <View style={styles.body}>
           <View style={styles.inputArea}>
             <TextInput 
-            style={styles.textInput} 
-            placeholder="Email" 
-            value={dataRegist.email}
-            onChangeText={value => setDataRegist(prev => { return { ...prev, email: value } })}/>
+              style={styles.textInput} 
+              placeholder="Email" 
+              value={dataRegist.email}
+              onChangeText={value => setDataRegist(curr => { return { ...curr, email: value } })}
+            />
             <TextInput 
-            style={styles.textInput} 
-            placeholder="Password" 
-            value={dataRegist.password}
-            onChangeText={value => setDataRegist(prev => { return { ...prev, password: value } })} 
-            secureTextEntry={true}/>
+              style={styles.textInput} 
+              placeholder="Password" 
+              value={dataRegist.password}
+              onChangeText={value => setDataRegist(curr => { return { ...curr, password: value } })} 
+              secureTextEntry={true}
+            />
             <TextInput 
-            style={styles.textInput} 
-            placeholder="Name" 
-            value={dataRegist.name}
-            onChangeText={value => setDataRegist(prev => { return { ...prev, name: value } })}/>
+              style={styles.textInput} 
+              placeholder="Name" 
+              value={dataRegist.name}
+              onChangeText={value => setDataRegist(curr => { return { ...curr, name: value } })}
+            />
             <TextInput 
-            style={styles.textInput} 
-            placeholder="Address" 
-            value={dataRegist.address}
-            onChangeText={value => setDataRegist(prev => { return { ...prev, address: value } })}/>
+              style={styles.textInput} 
+              placeholder="Address" 
+              value={dataRegist.address}
+              onChangeText={value => setDataRegist(curr => { return { ...curr, address: value } })}
+            />
             <SelectList 
               data={gender} 
-              setSelected={value => setDataRegist(prev => { return { ...prev, gender: value } })}
+              setSelected={value => setDataRegist(curr => { return { ...curr, gender: value } })}
               maxHeight={100}
               boxStyles={{backgroundColor: 'white', width: 290, margin: 5, borderRadius: 0}}
               placeholder='Select Gender'
@@ -108,10 +112,11 @@ const SignUpScreen = ({navigation}) => {
               dropdownTextStyles={{fontSize: 15}}
             />
             <TextInput 
-            style={styles.textInput} 
-            placeholder="Birth Date" 
-            value={dataRegist.birthDate}
-            onChangeText={value => setDataRegist(prev => { return { ...prev, birthDate: value } })}/>
+              style={styles.textInput} 
+              placeholder="Birth Date" 
+              value={dataRegist.birthDate}
+              onChangeText={value => setDataRegist(curr => { return { ...curr, birthDate: value } })}
+            />
           </View>
           <View style={styles.buttonArea}>
             <TouchableOpacity style={styles.buttonLogin} onPress={signUp}>
@@ -195,17 +200,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     textDecorationLine: 'underline'
-  }
-  // buttonSignup: {
-  //   backgroundColor: '#cbad8d',
-  //   margin: 10,
-  //   padding: 9,
-  //   borderRadius: 25,
-  //   width: '80%',
-  //   height: 50,
-  //   alignSelf: 'center',
-  //   justifyContent: 'center'
-  // },
+  },
+  datePickerStyle: {
+    width: 230,
+  },
 })
 
 export default SignUpScreen;

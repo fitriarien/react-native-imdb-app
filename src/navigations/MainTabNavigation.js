@@ -53,6 +53,7 @@ const MainTabNavigation = () => {
           tabBarStyle: {backgroundColor:'#000'},
           tabBarLabel: 'Profile',
         }}
+        screenOptions={{ unmountOnBlur: true }}
       />
     </Tab.Navigator>
   );

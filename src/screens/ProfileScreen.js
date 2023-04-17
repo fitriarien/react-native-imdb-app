@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, StyleSheet, Alert, Text, TouchableOpacity} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import serverApi from '../util/server-api';
 import { FontAwesome } from '@expo/vector-icons';
@@ -37,6 +37,12 @@ const ProfileScreen = () => {
     fetchProfile();
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      fetchProfile();
+    }, [])
+  )
+
   const logout = async () => {
     const token = await AsyncStorage.getItem('token');
     // console.log(token);
@@ -47,6 +53,7 @@ const ProfileScreen = () => {
           Authorization: `Bearer ${token}`
         }
       });
+
       await AsyncStorage.clear();
       dispatch({ type: 'SET_LOGOUT'});
       navigation.navigate('Login');
@@ -66,12 +73,7 @@ const ProfileScreen = () => {
         <Text style={styles.field}>Address</Text>
         <Text style={styles.dataField}>{userProfile.address}</Text>
         <Text style={styles.field}>Gender</Text>
-        {userProfile.gender === 1 
-        ?
-          <Text style={styles.dataField}>Male</Text>
-        :
-          <Text style={styles.dataField}>Female</Text>
-        }
+        <Text style={styles.dataField}>{userProfile.gender}</Text>
         <Text style={styles.field}>Birth Date</Text>
         <Text style={styles.dataField}>{userProfile.birthDate}</Text>
       </View>
