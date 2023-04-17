@@ -35,7 +35,7 @@ const SearchCard = ({movie}) => {
 
       if (isListed) {
         console.log("isListed : " + isListed);
-        Alert.alert("Movie has already in watchlist");
+        Alert.alert("Movie has been already in watchlist");
       } else {
         // post to server and run animation
         let dataToPost = {};
